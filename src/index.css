@@ -6,6 +6,8 @@ body {
   ol, ul {
     padding-left: 30px;
   }
+
+  
   
   .board-row:after {
     clear: both;
@@ -30,6 +32,10 @@ body {
     padding: 0;
     text-align: center;
     width: 34px;
+  }
+
+  .square--won{
+    background-color:#ff0000;
   }
   
   .square:focus {

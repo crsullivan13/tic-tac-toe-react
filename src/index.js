@@ -6,7 +6,7 @@ import './index.css';
 function Square(props) {    
       return (
         <button 
-            className="square" 
+            className={"square" + (props.isWinning ? " square--won" : "")}
             onClick={props.onClick}
         >
           {props.value}
@@ -15,15 +15,11 @@ function Square(props) {
   }
   
   class Board extends React.Component {
-   
-
-    
-    
-    
     renderSquare(i) {
       return( 
         <Square 
-            key={"square" + i}
+            //key={"square" + i}
+            isWinning = {this.props.winningSquares.includes(i)}
             value={this.props.squares[i]}
             onClick={() => this.props.onClick(i)}
         />
@@ -122,7 +118,7 @@ function Square(props) {
       if (winner === 'Cats Game!') {
         status = winner;
       } else if (winner){
-        status = 'Winner: ' + winner;
+        status = 'Winner: ' + winner.winner;
       } else {
         status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
       }
@@ -131,6 +127,7 @@ function Square(props) {
         <div className="game">
           <div className="game-board">
             <Board
+              winningSquares = {winner ? winner.line : []}
               squares = {current.squares}
               onClick={(i) => this.handleClick(i)}
             />
@@ -165,7 +162,9 @@ function Square(props) {
     for (let i = 0; i < lines.length; i++){
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
-        return squares[a];
+        
+        
+        return {winner: squares[a], line: [a, b, c]};
       }
     }
 
